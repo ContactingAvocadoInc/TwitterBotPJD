@@ -1,15 +1,16 @@
-using Tweetinvi;
+using TwitterSharp.Client;
+using TwitterSharp.Rule;
 
 namespace TwitterBotPJD.ReceiveTweets;
 
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
-    private readonly ITwitterClient _twitterClient;
+    private readonly TwitterClient _twitterClient;
 
     public Worker(
         ILogger<Worker> logger,
-        ITwitterClient twitterClient)
+        TwitterClient twitterClient)
     {
         _logger = logger;
         _twitterClient = twitterClient;
@@ -17,11 +18,14 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var user = await _twitterClient.UsersV2.GetUserByNameAsync("PJDSentiment");
+        var tweets = await _twitterClient.GetRecentTweets(Expression.Author("PJDSentiment"));
         while (!stoppingToken.IsCancellationRequested)
         {
             _logger.LogInformation("Worker running at: {Time}", DateTimeOffset.Now);
-            _logger.LogInformation("Name: {Name}", user.User.Name);
+            foreach (var tweet in tweets)
+            {
+                _logger.LogInformation("Tweet: {Tweet}", tweet.Text);
+            }
             await Task.Delay(1000, stoppingToken);
         }
     }

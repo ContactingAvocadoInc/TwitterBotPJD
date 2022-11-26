@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotPJD.ReceiveTweets", "TwitterBotPJD.ReceiveTweets\TwitterBotPJD.ReceiveTweets.csproj", "{1FAF89A7-8170-4BD8-B69D-56C5C7578620}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workers", "workers", "{CD4C4B71-F267-4898-8CDC-37CD07FA2EF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,8 @@ Global
 		{1FAF89A7-8170-4BD8-B69D-56C5C7578620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FAF89A7-8170-4BD8-B69D-56C5C7578620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FAF89A7-8170-4BD8-B69D-56C5C7578620}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1FAF89A7-8170-4BD8-B69D-56C5C7578620} = {CD4C4B71-F267-4898-8CDC-37CD07FA2EF4}
 	EndGlobalSection
 EndGlobal

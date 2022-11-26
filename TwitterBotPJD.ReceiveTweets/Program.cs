@@ -1,6 +1,5 @@
-using Tweetinvi;
-using Tweetinvi.Models;
 using TwitterBotPJD.ReceiveTweets;
+using TwitterSharp.Client;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((context, config) =>
@@ -9,15 +8,10 @@ var host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((context, services) =>
     {
-        var twitterCredentials = context
+        var bearerToken = context
             .Configuration
-            .GetSection("TwitterCredentials")
-            .Get<TwitterCredentials>();
-        services.AddSingleton<ITwitterClient>(_ => new TwitterClient(
-            twitterCredentials.ConsumerKey,
-            twitterCredentials.ConsumerSecret,
-            twitterCredentials.AccessToken,
-            twitterCredentials.AccessTokenSecret));
+            .GetSection("TwitterCredentials:BearerToken").Value;
+        services.AddSingleton(_ => new TwitterClient(bearerToken));
         services.AddHostedService<Worker>();
     })
     .Build();

@@ -1,4 +1,5 @@
 using Tweetinvi;
+using Tweetinvi.Parameters.V2;
 
 namespace TwitterBotPJD.ReceiveTweets;
 
@@ -17,12 +18,26 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var user = await _twitterClient.UsersV2.GetUserByNameAsync("PJDSentiment");
+        var startTime = DateTime.Now.AddDays(-7);
+
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("Worker running at: {Time}", DateTimeOffset.Now);
-            _logger.LogInformation("Name: {Name}", user.User.Name);
-            await Task.Delay(1000, stoppingToken);
+            var searchResponse = await _twitterClient.SearchV2.SearchTweetsAsync(
+                new SearchTweetsV2Parameters("pjdsentiment")
+                {
+                    StartTime = startTime
+                });
+            var tweets = searchResponse.Tweets;
+            var lastTweet = tweets.FirstOrDefault();
+
+            if (lastTweet != null)
+                startTime = lastTweet!.CreatedAt.DateTime.AddSeconds(1);
+
+            foreach (var tweet in tweets)
+            {
+                _logger.LogInformation("tweet: {@Tweet}", tweet.Text);
+            }
+            await Task.Delay(10000, stoppingToken);
         }
     }
 }

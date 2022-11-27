@@ -7,8 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.9-develop.667" />
       <PackageReference Include="MediatR" Version="11.1.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+      <PackageReference Include="TweetinviAPI" Version="5.0.4" />
     </ItemGroup>
 
 </Project>

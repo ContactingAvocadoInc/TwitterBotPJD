@@ -1,10 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotPJD.ReceiveTweets", "TwitterBotPJD.ReceiveTweets\TwitterBotPJD.ReceiveTweets.csproj", "{1FAF89A7-8170-4BD8-B69D-56C5C7578620}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workers", "workers", "{CD4C4B71-F267-4898-8CDC-37CD07FA2EF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotPJD.SendTweets", "TwitterBotPJD.SendTweets\TwitterBotPJD.SendTweets.csproj", "{2A892F27-E948-46F8-9D6F-46BA97CEF1F2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application", "{DE3AB8AC-CC2A-4871-8257-306D32620A03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotPJD.Application", "application\TwitterBotPJD.Application\TwitterBotPJD.Application.csproj", "{2D2F4289-E512-465D-891F-1CEB94661389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotPJD.ReceiveTweets", "workers\TwitterBotPJD.ReceiveTweets\TwitterBotPJD.ReceiveTweets.csproj", "{15A64601-4683-4EA0-8887-5D9550E96523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterBotPJD.SendTweets", "workers\TwitterBotPJD.SendTweets\TwitterBotPJD.SendTweets.csproj", "{DE04250D-4EEC-429D-BAF6-0653A7997DA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,17 +16,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1FAF89A7-8170-4BD8-B69D-56C5C7578620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FAF89A7-8170-4BD8-B69D-56C5C7578620}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FAF89A7-8170-4BD8-B69D-56C5C7578620}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FAF89A7-8170-4BD8-B69D-56C5C7578620}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A892F27-E948-46F8-9D6F-46BA97CEF1F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A892F27-E948-46F8-9D6F-46BA97CEF1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A892F27-E948-46F8-9D6F-46BA97CEF1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A892F27-E948-46F8-9D6F-46BA97CEF1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D2F4289-E512-465D-891F-1CEB94661389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D2F4289-E512-465D-891F-1CEB94661389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D2F4289-E512-465D-891F-1CEB94661389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D2F4289-E512-465D-891F-1CEB94661389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15A64601-4683-4EA0-8887-5D9550E96523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15A64601-4683-4EA0-8887-5D9550E96523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15A64601-4683-4EA0-8887-5D9550E96523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15A64601-4683-4EA0-8887-5D9550E96523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE04250D-4EEC-429D-BAF6-0653A7997DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE04250D-4EEC-429D-BAF6-0653A7997DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE04250D-4EEC-429D-BAF6-0653A7997DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE04250D-4EEC-429D-BAF6-0653A7997DA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1FAF89A7-8170-4BD8-B69D-56C5C7578620} = {CD4C4B71-F267-4898-8CDC-37CD07FA2EF4}
-		{2A892F27-E948-46F8-9D6F-46BA97CEF1F2} = {CD4C4B71-F267-4898-8CDC-37CD07FA2EF4}
+		{2D2F4289-E512-465D-891F-1CEB94661389} = {DE3AB8AC-CC2A-4871-8257-306D32620A03}
+		{15A64601-4683-4EA0-8887-5D9550E96523} = {CD4C4B71-F267-4898-8CDC-37CD07FA2EF4}
+		{DE04250D-4EEC-429D-BAF6-0653A7997DA5} = {CD4C4B71-F267-4898-8CDC-37CD07FA2EF4}
 	EndGlobalSection
 EndGlobal

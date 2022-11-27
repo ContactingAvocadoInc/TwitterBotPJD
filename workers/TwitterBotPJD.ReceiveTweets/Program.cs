@@ -1,5 +1,7 @@
+using MediatR;
 using Tweetinvi;
 using Tweetinvi.Models;
+using TwitterBotPJD.Application.Features.PushTweet;
 using TwitterBotPJD.ReceiveTweets;
 
 var host = Host.CreateDefaultBuilder(args)
@@ -18,6 +20,7 @@ var host = Host.CreateDefaultBuilder(args)
             twitterCredentials.ConsumerSecret,
             twitterCredentials.AccessToken,
             twitterCredentials.AccessTokenSecret));
+        services.AddMediatR(typeof(PushTweetCommand));
         services.AddHostedService<Worker>();
     })
     .Build();

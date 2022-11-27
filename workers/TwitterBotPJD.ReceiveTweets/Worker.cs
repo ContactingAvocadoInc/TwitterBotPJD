@@ -1,5 +1,7 @@
+using MediatR;
 using Tweetinvi;
 using Tweetinvi.Parameters.V2;
+using TwitterBotPJD.Application.Features.PushTweet;
 
 namespace TwitterBotPJD.ReceiveTweets;
 
@@ -7,18 +9,21 @@ public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private readonly ITwitterClient _twitterClient;
+    private readonly IMediator _mediator;
 
     public Worker(
         ILogger<Worker> logger,
-        ITwitterClient twitterClient)
+        ITwitterClient twitterClient,
+        IMediator mediator)
     {
         _logger = logger;
         _twitterClient = twitterClient;
+        _mediator = mediator;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var startTime = DateTime.Now.AddDays(-7);
+        var startTime = DateTime.Now.AddSeconds(-10);
 
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -35,9 +40,14 @@ public class Worker : BackgroundService
 
             foreach (var tweet in tweets)
             {
-                _logger.LogInformation("tweet: {@Tweet}", tweet.Text);
+                var command = new PushTweetCommand
+                {
+                    TweetText = tweet.Text,
+                    SentFromId = tweet.AuthorId
+                };
+                await _mediator.Send(command, stoppingToken);
             }
-            await Task.Delay(10000, stoppingToken);
+            await Task.Delay(80, stoppingToken);
         }
     }
 }

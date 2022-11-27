@@ -1,3 +1,4 @@
+using MassTransit;
 using MediatR;
 using Tweetinvi;
 using Tweetinvi.Parameters.V2;
@@ -11,15 +12,18 @@ public class Worker : BackgroundService
     private readonly ITwitterClient _twitterClient;
     private readonly IMediator _mediator;
     private string _sinceId = string.Empty;
+    private readonly IBus _bus;
 
     public Worker(
         ILogger<Worker> logger,
         ITwitterClient twitterClient,
-        IMediator mediator)
+        IMediator mediator,
+        IBus bus)
     {
         _logger = logger;
         _twitterClient = twitterClient;
         _mediator = mediator;
+        _bus = bus;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -46,12 +50,23 @@ public class Worker : BackgroundService
             if (lastTweet != null)
                 _sinceId = lastTweet.Id;
 
+            
             foreach (var tweet in tweets)
             {
+                var firstMentions = tweet.Entities.Mentions.FirstOrDefault().Username;
+
+                if (firstMentions == null)
+                {
+                    Console.WriteLine("No mentions in tweet.");
+                    continue;
+                }
+                    
+                
                 var command = new PushTweetCommand
                 {
                     TweetText = tweet.Text,
-                    SentFromId = tweet.AuthorId
+                    RequestedUser = firstMentions,
+                    SentFromTweetId = tweet.AuthorId
                 };
                 await _mediator.Send(command, stoppingToken);
             }

@@ -10,6 +10,7 @@ public class Worker : BackgroundService
     private readonly ILogger<Worker> _logger;
     private readonly ITwitterClient _twitterClient;
     private readonly IMediator _mediator;
+    private string _sinceId = string.Empty;
 
     public Worker(
         ILogger<Worker> logger,
@@ -23,20 +24,27 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var startTime = DateTime.Now.AddSeconds(-10);
+        var tenRecentTweets = await _twitterClient.SearchV2.SearchTweetsAsync(
+            new SearchTweetsV2Parameters("#pjdsentiment")
+        {
+            PageSize = 10
+        });
+        var recentTweet = tenRecentTweets.Tweets.FirstOrDefault();
+        if (recentTweet != null)
+            _sinceId = recentTweet.Id;
 
         while (!stoppingToken.IsCancellationRequested)
         {
             var searchResponse = await _twitterClient.SearchV2.SearchTweetsAsync(
-                new SearchTweetsV2Parameters("pjdsentiment")
+                new SearchTweetsV2Parameters("#pjdsentiment")
                 {
-                    StartTime = startTime
+                    SinceId = _sinceId
                 });
             var tweets = searchResponse.Tweets;
             var lastTweet = tweets.FirstOrDefault();
 
             if (lastTweet != null)
-                startTime = lastTweet!.CreatedAt.DateTime.AddSeconds(1);
+                _sinceId = lastTweet.Id;
 
             foreach (var tweet in tweets)
             {
@@ -47,7 +55,7 @@ public class Worker : BackgroundService
                 };
                 await _mediator.Send(command, stoppingToken);
             }
-            await Task.Delay(80, stoppingToken);
+            await Task.Delay(8000, stoppingToken);
         }
     }
 }
